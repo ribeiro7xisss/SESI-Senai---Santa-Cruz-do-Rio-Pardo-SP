@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Real</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        .calc-container {
+            max-width: 250px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .display {
+            width: 100%;
+            height: 40px;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            text-align: right;
+            padding: 5px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            background: #fff;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        button {
+            padding: 15px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+            background: #e0e0e0;
+            cursor: pointer;
+        }
+        button:active {
+            background: #d0d0d0;
+        }
+        .btn-op { background: #ffd966; }
+        .btn-eq { background: #b6d7a8; }
+        .btn-clear { background: #ea9999; }
+    </style>
+</head>
+<body>
+    <div class="calc-container">
+        <input type="text" id="display" class="display" disabled>
+        <div class="buttons">
+            <button onclick="addNum('7')">7</button>
+            <button onclick="addNum('8')">8</button>
+            <button onclick="addNum('9')">9</button>
+            <button class="btn-op" onclick="addOp('/')">÷</button>
+            <button onclick="addNum('4')">4</button>
+            <button onclick="addNum('5')">5</button>
+            <button onclick="addNum('6')">6</button>
+            <button class="btn-op" onclick="addOp('*')">×</button>
+            <button onclick="addNum('1')">1</button>
+            <button onclick="addNum('2')">2</button>
+            <button onclick="addNum('3')">3</button>
+            <button class="btn-op" onclick="addOp('-')">−</button>
+            <button onclick="addNum('0')">0</button>
+            <button onclick="addDot()">.</button>
+            <button class="btn-clear" onclick="clearDisplay()">C</button>
+            <button class="btn-op" onclick="addOp('+')">+</button>
+            <button class="btn-eq" style="grid-column: span 4;" onclick="calcular()">=</button>
+        </div>
+        <div id="resultado" style="margin-top:10px; font-weight:bold;"></div>
+    </div>
+    <script>
+        let expressao = "";
+
+        function addNum(num) {
+            expressao += num;
+            document.getElementById('display').value = expressao;
+        }
+
+        function addOp(op) {
+            if (expressao.length > 0 && !isNaN(expressao[expressao.length - 1])) {
+                expressao += op;
+                document.getElementById('display').value = expressao;
+            }
+        }
+
+        function addDot() {
+            if (expressao.length === 0 || isNaN(expressao[expressao.length - 1])) return;
+            expressao += '.';
+            document.getElementById('display').value = expressao;
+        }
+
+        function clearDisplay() {
+            expressao = "";
+            document.getElementById('display').value = "";
+            document.getElementById('resultado').innerText = "";
+        }
+
+        function calcular() {
+            try {
+                let resultado = eval(expressao);
+                document.getElementById('resultado').innerText = "Resultado: " + resultado;
+                document.getElementById('display').value = resultado;
+                expressao = resultado.toString();
+            } catch {
+                document.getElementById('resultado').innerText = "Expressão inválida!";
+            }
+        }
+    </script>
+</body>
+</html>
