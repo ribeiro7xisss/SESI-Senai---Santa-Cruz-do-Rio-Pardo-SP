@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portal de Feedback & Comunicados</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+        /* Reset */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            color: #222;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: #0069c0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover,
+        a:focus {
+            color: #004b82;
+            outline: none;
+        }
+
+        /* Layout */
+        header {
+            background: #004b82;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.4rem;
+            letter-spacing: 1.2px;
+            user-select: none;
+        }
+
+        /* Hamburger menu checkbox hack */
+        #nav-toggle {
+            display: none;
+        }
+
+        .nav-toggle-label {
+            display: none;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-toggle-label .material-icons {
+            font-size: 32px;
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+        }
+
+        nav a {
+            font-weight: 600;
+            padding: 12px 0;
+            position: relative;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            height: 3px;
+            background-color: #19a1d7;
+            width: 0;
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        nav a:hover::after,
+        nav a:focus::after {
+            width: 100%;
+        }
+
+        /* Responsive nav */
+
+        /* Mobile */
+        @media (max-width: 767px) {
+            .nav-toggle-label {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: #004b82;
+                flex-direction: column;
+                align-items: center;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+                z-index: 9;
+            }
+
+            nav a {
+                padding: 16px 0;
+                width: 100%;
+                text-align: center;
+                border-top: 1px solid rgba(255, 255, 255, 0.15);
+            }
+
+            #nav-toggle:checked+.nav-toggle-label+nav {
+                max-height: 300px;
+            }
+        }
+
+        main {
+            flex-grow: 1;
+            max-width: 1200px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 48px;
+        }
+
+        /* Tablet */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            main {
+                grid-template-columns: 2fr 3fr;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 1024px) {
+            main {
+                grid-template-columns: 2fr 5fr 3fr;
+            }
+        }
+
+        section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #004b82;
+            font-size: 1.8rem;
+            user-select: none;
+        }
+
+        /* Feedback form */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            user-select: none;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            border: 1.8px solid #d1d9e6;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 48px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #19a1d7;
+            box-shadow: 0 0 5px rgba(25, 161, 215, 0.6);
+        }
+
+        textarea {
+            min-height: 100px;
+        }
+
+        button[type="submit"] {
+            background: #19a1d7;
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+
+        button[type="submit"]:hover,
+        button[type="submit"]:focus {
+            background: #1178ad;
+            outline: none;
+        }
+
+        /* Comunicados */
+        .comunicado {
+            border-left: 6px solid #19a1d7;
+            padding-left: 16px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .comunicado time {
+            font-size: 0.85rem;
+            color: #666;
+            user-select: none;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .comunicado-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+            user-select: none;
+        }
+
+        /* APIs Section */
+        .api-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: #eaf5fb;
+            color: #004b82;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+
+        .api-link:hover,
+        .api-link:focus {
+            background-color: #c9e4fb;
+            outline: none;
+        }
+
+        .api-icon {
+            font-size: 24px;
+            color: #19a1d7;
+            user-select: none;
+        }
+
+        /* Accessibility */
+        button,
+        input,
+        textarea,
+        a {
+            user-select: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #004b82;
+            color: white;
+            text-align: center;
+            padding: 24px 12px;
+            font-size: 0.9rem;
+            user-select: none;
+            position: sticky;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo" tabindex="0">Empresa Feedback</div>
+
+            <input type="checkbox" id="nav-toggle" aria-label="Toggle menu" />
+            <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
+                <span class="material-icons">menu</span>
+            </label>
+
+            <nav role="navigation" aria-label="Menu principal">
+                <a href="#feedback" tabindex="0">Feedbacks</a>
+                <a href="#comunicados" tabindex="0">Comunicados</a>
+                <a href="#apis" tabindex="0">APIs</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="feedback" aria-labelledby="feedback-title" tabindex="0">
+            <h2 id="feedback-title">Deixe seu Feedback</h2>
+            <form aria-describedby="feedback-desc" novalidate>
+                <p id="feedback-desc" style="margin-bottom: 16px; color: #555;">
+                    Utilize o formulário abaixo para enviar feedbacks anônimos ou com seu nome.
+                </p>
+
+                <label for="name">Nome (opcional)</label>
+                <input type="text" id="name" name="name" placeholder="Seu nome" autocomplete="off" />
+
+                <label for="email">Email (opcional)</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="off" />
+
+                <label for="message">Mensagem <span aria-hidden="true" style="color:#e74c3c;">*</span></label>
+                <textarea id="message" name="message" placeholder="Escreva seu feedback aqui..." required></textarea>
+
+                <button type="submit" aria-label="Enviar feedback">Enviar</button>
+            </form>
+        </section>
+
+        <section id="comunicados" aria-labelledby="comunicados-title" tabindex="0">
+            <h2 id="comunicados-title">Comunicados</h2>
+
+            <article class="comunicado" tabindex="0">
+                <time datetime="2024-06-01">01 de Junho de 2024</time>
+                <h3 class="comunicado-title">Manutenção do Sistema</h3>
+                <p>Informamos que haverá manutenção no sistema no dia 05 de Junho, das 22h às 2h. Durante esse período,
+                    o serviço ficará indisponível.</p>
+            </article>
+
+            <article class="comunicado" tabindex="0">
+                <time datetime="2024-06-04">04 de Junho de 2024</time>
+                <h3 class="comunicado-title">Nova Política de Segurança</h3>
+                <p>Atualizamos nossa política de segurança para proteger ainda mais os dados dos colaboradores. Leia o
+                    documento completo no portal interno.</p>
+            </article>
+
+            <article class="comunicado" tabindex="0">
+                <time datetime="2024-06-10">10 de Junho de 2024</time>
+                <h3 class="comunicado-title">Pesquisa de Clima Organizacional</h3>
+                <p>Participe da pesquisa de clima organizacional que será realizada entre os dias 12 e 20 de Junho. Sua
+                    opinião é muito importante!</p>
+            </article>
+        </section>
+
+        <section id="apis" aria-labelledby="apis-title" tabindex="0">
+            <h2 id="apis-title">APIs Úteis</h2>
+            <a href="https://jsonplaceholder.typicode.com/posts" target="_blank" rel="noopener noreferrer"
+                class="api-link" tabindex="0">
+                <span class="material-icons api-icon" aria-hidden="true">cloud</span>
+                JSONPlaceholder – API Fake para Testes
+            </a>
+            <a href="https://api.publicapis.org/entries" target="_blank" rel="noopener noreferrer" class="api-link"
+                tabindex="0">
+                <span class="material-icons api-icon" aria-hidden="true">storage</span>
+                Public APIs –

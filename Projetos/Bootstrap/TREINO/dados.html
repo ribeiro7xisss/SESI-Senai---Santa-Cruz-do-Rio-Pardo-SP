@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Banco de Dados Simples de Produtos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9fafb;
+      color: #111827;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+    label {
+      font-weight: 600;
+      width: 100%;
+    }
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+    input:focus {
+      border-color: #2563eb;
+      outline: none;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      flex-shrink: 0;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    table {
+      width: 100%;
+      max-width: 800px;
+      margin-top: 32px;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    thead {
+      background: #2563eb;
+      color: white;
+      font-weight: 700;
+    }
+    th, td {
+      padding: 16px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    tbody tr:hover {
+      background-color: #f3f4f6;
+    }
+    .remove-btn {
+      background: #dc2626;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .remove-btn:hover {
+      background: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Banco de Dados</h1>
+  <form id="productForm" autocomplete="off">
+    <label for="productName">Nome do Produto</label>
+    <input type="text" id="productName" name="productName" required placeholder="Digite o nome do produto" />
+
+    <label for="productCategory">Categoria</label>
+    <input type="text" id="productCategory" name="productCategory" required placeholder="Digite a categoria" />
+
+    <label for="productPrice">Preço (R$)</label>
+    <input type="number" id="productPrice" name="productPrice" required min="0" step="0.01" placeholder="0.00" />
+
+    <button type="submit" title="Adicionar Produto">Adicionar Produto</button>
+  </form>
+
+  <table id="productTable" aria-label="Tabela de produtos cadastrados">
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Categoria</th>
+        <th>Preço (R$)</th>
+        <th>Remover</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const form = document.getElementById('productForm');
+    const tbody = document.querySelector('#productTable tbody');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // Obter valores do formulário
+      const name = document.getElementById('productName').value.trim();
+      const category = document.getElementById('productCategory').value.trim();
+      const price = parseFloat(document.getElementById('productPrice').value).toFixed(2);
+
+      // Criar uma nova linha na tabela
+      const tr = document.createElement('tr');
+
+      const tdName = document.createElement('td');
+      tdName.textContent = name;
+      tr.appendChild(tdName);
+
+      const tdCategory = document.createElement('td');
+      tdCategory.textContent = category;
+      tr.appendChild(tdCategory);
+
+      const tdPrice = document.createElement('td');
+      tdPrice.textContent = price.replace('.', ',');
+      tr.appendChild(tdPrice);
+
+      const tdRemove = document.createElement('td');
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Remover';
+      removeBtn.className = 'remove-btn';
+      removeBtn.type = 'button';
+      removeBtn.addEventListener('click', () => {
+        tr.remove();
+      });
+      tdRemove.appendChild(removeBtn);
+      tr.appendChild(tdRemove);
+
+      tbody.appendChild(tr);
+
+      // Limpar campos após adicionar
+      form.reset();
+      document.getElementById('productName').focus();
+    });
+  </script>
+
+</body>
+</html>
+

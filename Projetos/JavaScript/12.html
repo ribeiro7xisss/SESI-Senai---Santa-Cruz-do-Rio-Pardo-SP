@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios 12 - Java Script </title>
+    <script>
+        function selecionarCaracter(){
+            var caracter = document.getElementById('entrada').value
+            if(caracter == '0' || caracter == '1' || caracter == '2' || caracter == '3' || caracter == '4' || caracter == '5' || caracter == '6' ||caracter == '7' || caracter == '8' || caracter == '9'){
+                document.getElementById('numero').value = caracter
+                document.getElementById('entrada').value = null;
+            }else{
+                document.getElementById('letra').value = caracter
+                document.getElementById('entrada').value = null;
+            }
+        }
+    </script>
+</head>
+<body>
+    <label> Entrada </label>
+    <input type="text" id="entrada" onkeyup="selecionarCaracter()" placeholder="Digite o caracter">
+
+    <hr>
+
+    <label>Letra</label>
+    <input type="texto" id="letra" disabled="disabled">
+    <label>Numero</label>
+    <input type="texto" id="numero" disabled="disabled">
+</body>
+</html>

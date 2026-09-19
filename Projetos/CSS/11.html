@@ -1,0 +1,174 @@
++<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecercicio 11 - CSS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        main {
+            margin-top: 260px;
+        }
+
+        p {
+            text-align: justify;
+            line-height: 1.5em;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            padding: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover {
+            color: #ef5a2c;
+        }
+
+        .menu_top {
+            width: 100%;
+            height: 170px;
+            border-bottom: 3px solid #36c8f0;
+            border-top: 10px solid #36c8f0;
+            background-color: white;
+        }
+
+        .top_esp {
+            width: 140px;
+            float: left;
+            padding: 10px;
+        }
+
+        .top_dir {
+            float: left;
+            text-align: center;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 100px;
+            color: #ef5a2c;
+            padding-left: 100px;
+            padding-top: 20px;
+        }
+
+        .meio {
+            text-align: center;
+            padding: 15px;
+            width: 20;
+        }
+
+        .menu_down {
+            background: #36c8f0;
+            height: 90px;
+            text-align: center;
+        }
+
+        .menu {
+            position: relative;
+            top: 15px;
+            border-right: solid 2px;
+            padding: 10px;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .menu ul {
+            text-align: center;
+            margin: auto;
+            padding: 0;
+            max-width: 90%;
+        }
+
+        .menu ul li {
+            background-color: #36c8f0;
+            width: 20%;
+            height: 40px;
+            float: left;
+            display: inline;
+            text-align: center;
+            line-height: 40px;
+            position: relative;
+            text-align: center;
+        }
+
+        .menu ul li:hover {
+            background-color: #615b5b;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="menu_top">
+            <div class="top_esp">
+                <figure>
+                    <img src="IMG/lorem2.svg" alt="logo" height="140px">
+                </figure>
+            </div>
+            <div class="top_dir">
+                PETSHOP YOUNG PHOENIX
+            </div>
+            <div class="clear"></div>
+            <div class="menu_down">
+                <nav class="menu">
+                    <ul>
+                        <li><a href="#">HOME</a></li>
+                        <li><a href="#">RAÇÃO</a></li>
+                        <li><a href="#">BRINQUEDOS</a></li>
+                        <li><a href="#">ROUPAS</a></li>
+                        <li><a href="#">BANHO E TOSA</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="meio">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est consequuntur eaque, consequatur debitis
+                provident ut nam excepturi, nisi libero obcaecati tempora iusto quam dicta vel at quidem reiciendis sint
+                optio! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit dolore eum, beatae optio
+                deleniti nostrum id totam voluptatibus, rem cupiditate saepe pariatur possimus! Doloremque quibusdam
+                consequatur, nesciunt exercitationem nam voluptate? Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. Nulla vel consectetur, eius facilis ipsum consequuntur temporibus, laborum modi dignissimos
+                voluptas quidem inventore. Vero quo tempore magni enim libero vel modi.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est consequuntur eaque, consequatur debitis
+                provident ut nam excepturi, nisi libero obcaecati tempora iusto quam dicta vel at quidem reiciendis sint
+                optio! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit alias facere magni officiis, quia
+                necessitatibus sit. Recusandae adipisci assumenda alias, accusantium necessitatibus explicabo impedit
+                deleniti itaque labore perspiciatis eaque quidem! Lorem ipsum dolor sit amet consectetur, adipisicing
+                elit. Quaerat deserunt eligendi dolore laborum hic in numquam odit tempore aspernatur vel porro, unde
+                veritatis fugiat? Eum deserunt repellat unde iure ratione.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est consequuntur eaque, consequatur debitis
+                provident ut nam excepturi, nisi libero obcaecati tempora iusto quam dicta vel at quidem reiciendis sint
+                optio! Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur facilis, consequuntur error
+                quas, sed perspiciatis magnam officia quisquam hic consectetur repellat eaque sunt itaque dolorem culpa
+                autem amet repudiandae nobis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident atque
+                et nesciunt. Iure reprehenderit et consectetur quod architecto autem quos, eligendi ipsum dolorem
+                reiciendis iusto in, porro accusantium minus cupiditate.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est consequuntur eaque, consequatur debitis
+                provident ut nam excepturi, nisi libero obcaecati tempora iusto quam dicta vel at quidem reiciendis sint
+                optio! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem veniam quibusdam sapiente
+                atque in, veritatis repudiandae id, sint distinctio culpa aliquid voluptas animi consequuntur beatae
+                vero, porro voluptate ratione officia. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Quibusdam quis cum ratione libero dolores explicabo labore inventore assumenda delectus eum perferendis
+                optio, veritatis pariatur! Dolor aperiam incidunt ipsa expedita nulla? </p>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+
+</html>

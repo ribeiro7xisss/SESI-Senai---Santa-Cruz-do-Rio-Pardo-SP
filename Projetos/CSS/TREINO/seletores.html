@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seletores</title>
+    <style>
+        div h1{
+            color: rgb(255, 35, 35);
+        }
+        div p {
+            color: red;
+        }
+
+        div>p {
+            color: green;
+        }
+
+        div~h2 {
+            color: purple;
+            text-align: center;
+        }
+
+        #identif p {
+            color: blue;
+        }
+
+        .classe p {
+            color: rgb(226, 43, 186);
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Seletores</h1>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo qui facere, perferendis eum dicta labore
+            deserunt cupiditate explicabo repudiandae, repellendus sit non. Laborum rerum laboriosam dolore, enim atque
+            odit iure?
+        </p>
+        <article>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae fugiat corporis omnis quis sunt
+                molestiae, molestias ad, mollitia veniam magnam explicabo assumenda placeat iure amet nam expedita
+                temporibus possimus eum.</p>
+        </article>
+    </div>
+    <h2> Exemplo </h2>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore dolor ex tenetur id dolore vitae maiores
+        nobis! Qui voluptate veniam iste officiis facere, assumenda quo ratione, quisquam doloremque, totam quia.
+    </p>
+    <h2> Exemplo 2</h2>
+    <div id="identif">
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum itaque, pariatur quaerat ab minus quidem
+            doloremque aliquid a ullam ea in error repellat at est enim delectus deserunt. Tempore, aliquam?
+        </p>
+    </div>
+    <div class="classe">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis iusto cupiditate hic expedita inventore
+            quidem corrupti molestiae, minus error impedit, non porro laboriosam quo. Placeat mollitia reprehenderit
+            laboriosam alias repellendus?
+        </p>
+
+        <h1>VERMELHO TESTE 1</h1>
+
+    </div>
+    <div>
+
+        <h1> NÃO VERMELHO TESTE 2</h1>
+
+    </div>
+
+</body>
+
+</html>

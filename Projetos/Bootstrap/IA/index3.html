@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal de Feedback & Gestão de Usuários</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-left: 0;
+      transition: padding-left 0.3s ease;
+    }
+    a {
+      color: #0069c0;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover, a:focus {
+      color: #004b82;
+      outline: none;
+    }
+    /* Header */
+    header {
+      background: #004b82;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .header-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: 1.2px;
+      user-select: none;
+    }
+    /* Hamburger menu inside header for navigation */
+    #nav-toggle {
+      display: none;
+    }
+    .nav-toggle-label {
+      display: none;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .nav-toggle-label .material-icons {
+      font-size: 32px;
+    }
+    nav.header-nav {
+      display: flex;
+      gap: 32px;
+    }
+    nav.header-nav a {
+      font-weight: 600;
+      padding: 12px 0;
+      position: relative;
+    }
+    nav.header-nav a::after {
+      content: "";
+      position: absolute;
+      height: 3px;
+      background-color: #19a1d7;
+      width: 0;
+      left: 0;
+      bottom: 0;
+      transition: width 0.3s ease;
+      border-radius: 3px;
+    }
+    nav.header-nav a:hover::after,
+    nav.header-nav a:focus::after {
+      width: 100%;
+    }
+    @media (max-width: 767px) {
+      .nav-toggle-label {
+        display: flex;
+      }
+      nav.header-nav {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: #004b82;
+        flex-direction: column;
+        align-items: center;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+        z-index: 14;
+        padding-bottom: 16px;
+      }
+      nav.header-nav a {
+        padding: 16px 0;
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid rgba(255,255,255,0.15);
+      }
+      #nav-toggle:checked + .nav-toggle-label + nav.header-nav {
+        max-height: 320px;
+      }
+    }
+
+    /* Main content */
+    main {
+      flex-grow: 1;
+      margin: 40px auto 80px;
+      padding: 0 20px;
+      max-width: 1400px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      transition: margin-left 0.3s ease;
+    }
+    @media (min-width: 1024px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    section {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: #004b82;
+      font-size: 1.8rem;
+      user-select: none;
+    }
+
+    /* Feedback form */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+      user-select: none;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      border: 1.8px solid #d1d9e6;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+      min-height: 48px;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #19a1d7;
+      box-shadow: 0 0 5px rgba(25,161,215,0.6);
+    }
+    textarea {
+      min-height: 100px;
+    }
+    button[type="submit"] {
+      background: #19a1d7;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    button[type="submit"]:hover,
+    button[type="submit"]:focus {
+      background: #1178ad;
+      outline: none;
+    }
+
+    /* Comunicados */
+    .comunicado {
+      border-left: 6px solid #19a1d7;
+      padding-left: 16px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .comunicado time {
+      font-size: 0.85rem;
+      color: #666;
+      user-select: none;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .comunicado-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+      user-select: none;
+    }
+
+    /* APIs Section */
+    .api-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #eaf5fb;
+      color: #004b82;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .api-link:hover,
+    .api-link:focus {
+      background-color: #c9e4fb;
+      outline: none;
+    }
+    .api-icon {
+      font-size: 24px;
+      color: #19a1d7;
+      user-select: none;
+    }
+
+    /* Feedback list - Banco de Feedbacks */
+    .feedback-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .feedback-item {
+      border: 1.5px solid #19a1d7;
+      border-radius: 12px;
+      padding: 16px 20px;
+      background: #e1f0fb;
+    }
+    .feedback-item .author {
+      font-weight: 700;
+      color: #004b82;
+      margin-bottom: 8px;
+      user-select: none;
+    }
+    .feedback-item .message {
+      white-space: pre-wrap;
+      color: #222;
+    }
+
+    /* Employee management table and search filters */
+    .employee-search {
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+    .employee-search label {
+      font-weight: 600;
+      color: #333;
+      user-select: none;
+    }
+    .employee-search input[type="text"],
+    .employee-search select {
+      padding: 8px 12px;
+      border: 1.8px solid #d1d9e6;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 1rem;
+      min-width: 180px;
+      transition: border-color 0.3s ease;
+    }
+    .employee-search input[type="text"]:focus,
+    .employee-search select:focus {
+      outline: none;
+      border-color: #19a1d7;
+      box-shadow: 0 0 5px rgba(25,161,215,0.6);
+    }
+    table.employee-table-container {
+      overflow-x: auto;
+    }
+    table.employee-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      min-width: 600px;
+    }
+    table.employee-table thead {
+      background-color: #19a1d7;
+      color: white;
+      user-select: none;
+    }
+    table.employee-table th,
+    table.employee-table td {
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      text-align: left;
+      vertical-align: middle;
+    }
+    table.employee-table tbody tr:hover {
+      background-color: #def0fb;
+    }
+    table.employee-table tbody tr {
+      cursor: default;
+    }
+    /* Status badge */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      user-select: none;
+    }
+    .status-active {
+      background-color: #28a745;
+      color: white;
+    }
+    .status-inactive {
+      background-color: #dc3545;
+      color: white;
+    }
+    .status-onleave {
+      background-color: #ffc107;
+      color: #212529;
+    }
+
+    /* Accessibility */
+    button, input, textarea, a, select {
+      user-select: none;
+    }
+
+    /* Scrollbar styling for feedback list */
+    .feedback-list::-webkit-scrollbar,
+    table.employee-table-container::-webkit-scrollbar {
+      height: 8px;
+      width: 8px;
+    }
+    .feedback-list::-webkit-scrollbar-track,
+    table.employee-table-container::-webkit-scrollbar-track {
+      background: #f5f7fa;
+      border-radius: 8px;
+    }
+    .feedback-list::-webkit-scrollbar-thumb,
+    table.employee-table-container::-webkit-scrollbar-thumb {
+      background: #19a1d7;
+      border-radius: 8px;
+    }
+
+    /* Footer */
+    footer {
+      background: #004b82;
+      color: white;
+      text-align: center;
+      padding: 24px 12px;
+      font-size: 0.9rem;
+      user-select: none;
+      position: sticky;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo" tabindex="0">Empresa Feedback</div>
+
+      <input type="checkbox" id="nav-toggle" aria-label="Toggle menu" />
+      <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
+        <span class="material-icons">menu</span>
+      </label>
+
+      <nav class="header-nav" role="navigation" aria-label="Menu principal">
+        <a href="#feedback" tabindex="0">Enviar Feedback</a>
+        <a href="#feedbacks-banco" tabindex="0">Banco de Feedbacks</a>
+        <a href="#employee-management" tabindex="0">Gestão de Usuários</a>
+        <a href="#comunicados" tabindex="0">Comunicados</a>
+        <a href="#apis" tabindex="0">APIs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="feedback" aria-labelledby="feedback-title" tabindex="0">
+      <h2 id="feedback-title">Deixe seu Feedback</h2>
+      <form id="feedback-form" aria-describedby="feedback-desc" novalidate>
+        <p id="feedback-desc" style="margin-bottom: 16px; color: #555;">
+          Utilize o formulário abaixo para enviar feedbacks anônimos ou com seu nome.
+        </p>
+        <label for="name">Nome (opcional)</label>
+        <input type="text" id="name" name="name" placeholder="Seu nome" autocomplete="off" />
+        <label for="email">Email (opcional)</label>
+        <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="off" />
+        <label for="message">Mensagem <span aria-hidden="true" style="color:#e74c3c;">*</span></label>
+        <textarea id="message" name="message" placeholder="Escreva seu feedback aqui..." required></textarea>
+        <button type="submit" aria-label="Enviar feedback">Enviar</button>
+      </form>
+    </section>
+
+    <section id="feedbacks-banco" aria-labelledby="feedbacks-banco-title" tabindex="0">
+      <h2 id="feedbacks-banco-title">Banco de Feedbacks</h2>
+      <div class="feedback-list" tabindex="0" aria-label="Lista de feedbacks recebidos"></div>
+    </section>
+
+    <section id="employee-management" aria-labelledby="employee-management-title" tabindex="0">
+      <h2 id="employee-management-title">Gestão de Usuários</h2>
+      <div class="employee-search" aria-label="Filtros de busca dos usuários">
+        <label for="search-name">Buscar por nome:</label>
+        <input type="text" id="search-name" name="search-name" placeholder="Nome do funcionário" />
+
+        <label for="filter-department">Departamento:</label>
+        <select id="filter-department" name="filter-department">
+          <option value="">Todos</option>
+          <option value="Financeiro">Financeiro</option>
+          <option value="TI">TI</option>
+          <option value="Marketing">Marketing</option>
+          <option value="RH">RH</option>
+        </select>
+
+        <label for="filter-role">Cargo:</label>
+        <select id="filter-role" name="filter-role">
+          <option value="">Todos</option>
+          <option value="Analista">Analista</option>
+          <option value="Desenvolvedor">Desenvolvedor</option>
+          <option value="Coordenadora">Coordenadora</option>
+          <option value="Recrutador">Recrutador</option>
+          <option value="Gerente">Gerente</option>
+        </select>
+
+        <label for="filter-status">Status:</label>
+        <select id="filter-status" name="filter-status">
+          <option value="">Todos</option>
+          <option value="Ativo">Ativo</option>
+          <option value="Inativo">Inativo</option>
+          <option value="Licença">Licença</option>
+        </select>
+      </div>
+      <div class="employee-table-container" tabindex="0" aria-label="Tabela de funcionários">
+        <table class="employee-table" role="grid" aria-live="polite" aria-relevant="all">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Email</th>
+              <th scope="col">Departamento</th>
+              <th scope="col">Cargo</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody id="employee-tbody">
+            <!-- Rows inserted by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="comunicados" aria-labelledby="comunicados-title" tabindex="0">
+      <h2 id="comunicados-title">Comunicados</h2>
+
+      <article class="comunicado" tabindex="0">
+        <time datetime="2024-06-01">01 de Junho de 2024</time>
+        <h3 class="comunicado-title">Manutenção do Sistema</h3>
+        <p>Informamos que haverá manutenção no sistema no dia 05 de Junho, das 22h às 2h. Durante esse período, o serviço ficará indisponível.</p>
+      </article>
+
+      <article class="comunicado" tabindex="0">
+        <time datetime="2024-06-04">04 de Junho de 2024</time>
+        <h3 class="comunicado-title">Nova Política de Segurança</h3>
+        <p>Atualizamos nossa política de segurança para proteger ainda mais os dados dos colaboradores. Leia o documento completo no portal interno.</p>
+      </article>
+
+      <article class="comunicado" tabindex="0">
+        <time datetime="2024-06-10">10 de Junho de 2024</time>
+        <h3 class="comunicado-title">Pesquisa de Clima Organizacional</h3>
+        <p>Participe da pesquisa de clima organizacional que será realizada entre os dias 12 e 20 de Junho. Sua opinião é muito importante!</p>
+      </article>
+    </section>
+
+    <section id="apis" aria-labelledby="apis-title" tabindex="0">
+      <h2 id="apis-title">APIs Úteis</h2>
+      <a href="https://jsonplaceholder.typicode.com/posts" target="_blank" rel="noopener noreferrer" class="api-link" tabindex="0">
+        <span class="material-icons api-icon" aria-hidden="true">cloud</span>
+        JSONPlaceholder – API Fake para Testes
+      </a>
+      <a href="https://api.publicapis.org/entries" target="_blank" rel="noopener noreferrer" class="api-link" tabindex="0">
+        <span class="material-icons api-icon" aria-hidden="true">storage</span>
+        Public APIs – Catálogo de APIs públicas
+      </a>
+      <a href="https://www.mockapi.io" target="_blank" rel="noopener noreferrer" class="api-link" tabindex="0">
+        <span class="material-icons api-icon" aria-hidden="true">developer_mode</span>
+        MockAPI – Criar APIs falsas facilmente
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 Empresa Feedback. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // Data for employees
+    const employees = [
+      { name: "Ana Clara Silva", email: "ana.silva@empresa.com", department: "Financeiro", role: "Analista", status: "Ativo" },
+      { name: "Bruno Souza", email: "bruno.souza@empresa.com", department: "TI", role: "Desenvolvedor", status: "Ativo" },
+      { name: "Carla Matos", email: "carla.matos@empresa.com", department: "Marketing", role: "Coordenadora", status: "Licença" },
+      { name: "Diego Fernandes", email: "diego.fernandes@empresa.com", department: "RH", role: "Recrutador", status: "Inativo" },
+      { name: "Érica Gomes", email: "erica.gomes@empresa.com", department: "Financeiro", role: "Gerente", status: "Ativo" }
+    ];
+
+    // Feedbacks saved in localStorage key
+    const feedbackStorageKey = 'employeeFeedbacks';
+
+    // Elements references
+    const employeeTbody = document.getElementById('employee-tbody');
+    const searchName = document.getElementById('search-name');
+    const filterDepartment = document.getElementById('filter-department');
+    const filterRole = document.getElementById('filter-role');
+    const filterStatus = document.getElementById('filter-status');
+
+    const feedbackListDiv = document.querySelector('.feedback-list');
+    const feedbackForm = document.getElementById('feedback-form');
+
+    // Utils for creating DOM elements
+    function createElement(tag, props = {}, ...children) {
+      const el = document.createElement(tag);
+      Object.entries(props).forEach(([key, val]) => {
+        if(key === 'className') el.className = val;
+        else if(key === 'innerHTML') el.innerHTML = val;
+        else el.setAttribute(key, val);
+      });
+      children.forEach(child => {
+        if(typeof child === 'string') el.appendChild(document.createTextNode(child));
+        else if(child) el.appendChild(child);
+      });
+      return el;
+    }
+
+    // Render employees rows filtered
+    function renderEmployees(filter = {}) {
+      const { name = '', department = '', role = '', status = '' } = filter;
+      employeeTbody.innerHTML = '';
+      const filtered = employees.filter(emp => {
+        return (!name || emp.name.toLowerCase().includes(name.toLowerCase()))
+          && (!department || emp.department === department)
+          && (!role || emp.role === role)
+          && (!status || emp.status === status);
+      });
+      if(filtered.length === 0){
+        const tr = createElement('tr');
+        const td = createElement('td', {colspan:5, style:"text-align:center; color:#666;"}, 'Nenhum usuário encontrado.');
+        tr.appendChild(td);
+        employeeTbody.appendChild(tr);
+        return;
+      }
+      filtered.forEach(emp => {
+        const tr = createElement('tr', {tabindex:0});
+        tr.appendChild(createElement('td', {}, emp.name));
+        tr.appendChild(createElement('td', {}, emp.email));
+        tr.appendChild(createElement('td', {}, emp.department));
+        tr.appendChild(createElement('td', {}, emp.role));
+        const statusSpan = createElement('span', {className: 'status-badge'});
+        if(emp.status.toLowerCase() === 'ativo'){
+          statusSpan.classList.add('status-active');
+        } else if(emp.status.toLowerCase() === 'inativo'){
+          statusSpan.classList.add('status-inactive');
+        } else {
+          statusSpan.classList.add('status-onleave');
+        }
+        statusSpan.textContent = emp.status;
+        const tdStatus = createElement('td');
+        tdStatus.appendChild(statusSpan);
+        tr.appendChild(tdStatus);
+        employeeTbody.appendChild(tr);
+      });
+    }
+
+    // Load feedbacks from localStorage
+    function loadFeedbacks() {
+      const data = localStorage.getItem(feedbackStorageKey);
+      let feedbacks = [];
+      try {
+        feedbacks = data ? JSON.parse(data) : [];
+      } catch(e) {
+        feedbacks = [];
+      }
+      return feedbacks;
+    }
+
+    // Save feedbacks to localStorage
+    function saveFeedbacks(feedbacks) {
+      localStorage.setItem(feedbackStorageKey, JSON.stringify(feedbacks));
+    }
+
+    // Render feedbacks list
+    function renderFeedbacks() {
+      const feedbacks = loadFeedbacks();
+      feedbackListDiv.innerHTML = '';
+      if(feedbacks.length === 0){
+        feedbackListDiv.textContent = 'Nenhum feedback registrado ainda.';
+        return;
+      }
+      feedbacks.slice().reverse().forEach(({name, message}, i) => { // newest first
+        const article = createElement('article', {className:'feedback-item', tabindex:"0"});
+        const author = createElement('div', {className:'author'}, name || 'Anônimo');
+        const msg = createElement('div', {className:'message'}, message);
+        article.appendChild(author);
+        article.appendChild(msg);
+        feedbackListDiv.appendChild(article);
+      });
+    }
+
+    // Init app
+    function init() {
+      renderEmployees();
+
+      // Filters listeners
+      [searchName, filterDepartment, filterRole, filterStatus].forEach(input => {
+        input.addEventListener('input', () => {
+          renderEmployees({
+            name: searchName.value.trim(),
+            department: filterDepartment.value,
+            role: filterRole.value,
+            status: filterStatus.value,
+          });
+        });
+      });
+
+      // Feedback form submit handler
+      feedbackForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const formData = new FormData(feedbackForm);
+        const name = formData.get('name').trim();
+        const email = formData.get('email').trim(); // currently unused
+        const message = formData.get('message').trim();
+
+        if(!message){
+          alert('Por favor, escreva sua mensagem de feedback.');
+          return;
+        }
+
+        const feedbacks = loadFeedbacks();
+        feedbacks.push({name: name || 'Anônimo', email, message, date: new Date().toISOString()});
+        saveFeedbacks(feedbacks);
+        renderFeedbacks();
+        feedbackForm.reset();
+        alert('Feedback enviado com sucesso!');
+        // Optionally scroll to feedback list section
+        document.getElementById('feedbacks-banco').scrollIntoView({behavior:'smooth'});
+      });
+
+      renderFeedbacks();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
+

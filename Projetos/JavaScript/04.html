@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios 04 - Java Script</title>
+</head>
+<body>
+    <script>
+        var media = prompt('Qual sua media?');
+        //caixa alta
+        media = media.toUpperCase();
+        
+        switch (media){
+            case 'A':
+                document.write('Exelente');
+                break
+            
+            case 'B':
+                document.write('Ótimo');
+                break
+            
+            case 'C':
+                document.write('Bom');
+                break
+            
+            case 'D':
+                document.write('Regular');
+                break
+
+            case 'E':
+                document.write('Ruim');
+                break
+
+            case 'F':
+                document.write('Nos vemos de novo ano que vem...');
+                break
+
+            default:
+                document.write('Erro!');
+        }
+    </script>
+</body>
+</html>
